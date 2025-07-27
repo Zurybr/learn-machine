@@ -1,0 +1,5 @@
+<svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Pixel Art Logistic Curve -->
+  <rect width="64" height="64" fill="#ff00ff" />
+  <path d="M2 62 L18 62 L26 56 L32 48 L38 32 L44 16 L50 8 L62 2" stroke="#ffffff" stroke-width="2" fill="none" />
+</svg>
