@@ -3,15 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gradient Knight</title>
+    <title>Descenso de Gradiente</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header class="ui-panel">
-            <h1>Gradient Knight</h1>
-            <p>¡Encuentra el tesoro en el valle del costo!</p>
+            <h1>Descenso de Gradiente</h1>
+            <p>Controla el punto para buscar el mínimo de la función.</p>
         </header>
+
+        <section class="instructions ui-panel">
+            <h3>Instrucciones</h3>
+            <p>Ajusta <strong>Tamaño del Paso</strong> para definir la velocidad de descenso.</p>
+            <p>Selecciona el <strong>Punto de Inicio</strong> con la barra deslizante.</p>
+            <p>Presiona <strong>¡Comenzar!</strong> para mover el punto hacia el mínimo.</p>
+            <p>Usa <strong>Reiniciar</strong> para volver a intentar.</p>
+        </section>
 
         <div class="game-hud ui-panel">
             <div>Score: <span id="totalScore" class="score-value">0</span></div>
