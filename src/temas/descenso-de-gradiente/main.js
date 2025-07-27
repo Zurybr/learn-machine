@@ -1,4 +1,4 @@
-import Chart from 'chart.js/auto';
+import Chart from 'https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.esm.js';
 
 // === CONFIGURACIÓN DEL JUEGO ===
 const GAME_CONFIG = {
