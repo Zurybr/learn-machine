@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+    /* Paleta de Colores Pixel Art */
+    --pixel-bg: #1f1d36;
+    --pixel-primary: #3d2c8d;
+    --pixel-secondary: #907fa4;
+    --pixel-accent: #e9a6a6;
+    --pixel-success: #81b29a;
+    --pixel-warning: #f2cc8f;
+    --pixel-text: #f4f1de;
+    --pixel-dark: #000000;
+
+    /* Tipografía */
+    --font-pixel: 'Press Start 2P', cursive;
+}
+
+/* Estilos Base */
+body {
+    background-color: var(--pixel-bg);
+    color: var(--pixel-text);
+    font-family: var(--font-pixel);
+    image-rendering: pixelated; /* ¡Magia! */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: var(--pixel-primary);
+    border: 4px solid var(--pixel-dark);
+    box-shadow: 8px 8px 0px var(--pixel-dark);
+}
+
+/* Paneles y Cajas */
+.ui-panel {
+    background-color: var(--pixel-secondary);
+    padding: 1rem;
+    border: 4px solid var(--pixel-dark);
+    margin-bottom: 1rem;
+}
+
+.ui-panel h2, .ui-panel h3 {
+    color: var(--pixel-accent);
+    text-align: center;
+    margin-top: 0;
+}
+
+/* Botones */
+.btn {
+    background-color: var(--pixel-accent);
+    color: var(--pixel-dark);
+    border: 4px solid var(--pixel-dark);
+    padding: 0.5rem 1rem;
+    box-shadow: 4px 4px 0px var(--pixel-dark);
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+}
+
+.btn:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px var(--pixel-dark);
+}
+
+.btn:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px var(--pixel-dark);
+}
+
+/* HUD del Juego */
+.game-hud {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--pixel-dark);
+    color: var(--pixel-text);
+    margin-bottom: 1rem;
+}
+
+.score-value {
+    color: var(--pixel-warning);
+}
+
+/* Gráfico */
+.chart-container {
+    position: relative;
+    height: 400px;
+    background-color: var(--pixel-dark);
+    border: 4px solid var(--pixel-secondary);
+    padding: 1rem;
+}
+
+/* Personaje */
+#gradient-knight {
+    position: absolute;
+    width: 32px; /* Ancho del sprite */
+    height: 32px; /* Alto del sprite */
+    background-image: url('gradient-knight-sprite.svg'); /* ¡Necesitaremos este sprite! */
+    background-repeat: no-repeat;
+    transform: scale(2); /* Hacerlo más grande */
+    transition: left 0.1s linear;
+}
+
+/* Animaciones del Personaje */
+.idle {
+    animation: idle-anim 1s steps(4) infinite;
+}
+
+.running {
+    animation: run-anim 0.5s steps(6) infinite;
+}
+
+.victory {
+    animation: victory-anim 1s steps(5) infinite;
+}
+
+@keyframes idle-anim {
+    from { background-position: 0 0; }
+    to { background-position: -128px 0; }
+}
+
+@keyframes run-anim {
+    from { background-position: 0 -32px; }
+    to { background-position: -192px -32px; }
+}
+
+@keyframes victory-anim {
+    from { background-position: 0 -64px; }
+    to { background-position: -160px -64px; }
+}
+
+/* Controles */
+.controls-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.control-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  background: var(--pixel-secondary);
+  border: 2px solid var(--pixel-dark);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  background: var(--pixel-accent);
+  border: 2px solid var(--pixel-dark);
+  cursor: pointer;
+}
+
+/* Logros */
+.achievements-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.achievement-item.locked {
+    opacity: 0.5;
+    filter: grayscale(1);
+}
