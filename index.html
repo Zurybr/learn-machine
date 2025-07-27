@@ -4,80 +4,175 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="/vite.svg">
-    <title>Gradient Knight</title>
-    <link rel="stylesheet" href="/src/temas/descenso-de-gradiente/style.css">
+    <title>Linear Quest - Aprende Descenso de Gradiente</title>
+    <link rel="stylesheet" href="/src/style.css">
 </head>
 <body>
-    <div class="container">
-    <header class="ui-panel">
-        <h1>Descenso de Gradiente</h1>
-    </header>
-
-    <section class="ui-panel instructions">
-        <h3>Instrucciones</h3>
-        <ul>
-            <li>Ajusta el tamaño del paso (learning rate).</li>
-            <li>Define el punto de inicio.</li>
-            <li>Pulsa <strong>Comenzar</strong> para ver el descenso.</li>
-            <li>Observa cómo el punto se mueve hacia el mínimo.</li>
-        </ul>
-    </section>
-
-    <section class="ui-panel level-selector">
-        <h3>Seleccionar Nivel</h3>
-        <select id="levelSelector">
-            <option value="1">Nivel 1: Valle Sereno</option>
-            <option value="2">Nivel 2: Colinas Engañosas</option>
-        </select>
-    </section>
-
-    <div class="game-hud ui-panel">
-        <div>Puntaje: <span id="totalScore" class="score-value">0</span></div>
-        <div>Nivel: <span id="currentLevel" class="score-value">1</span></div>
+    <!-- Pantalla de inicio -->
+    <div id="intro-screen" class="screen active">
+        <div class="intro-background">
+            <div class="walking-character">
+                <div class="character"></div>
+            </div>
+            <div class="intro-text">
+                <h1>Linear Quest</h1>
+                <p class="subtitle">Domina el Descenso de Gradiente</p>
+                <div class="press-key">
+                    <span class="blink">Presiona cualquier tecla para comenzar</span>
+                </div>
+            </div>
+        </div>
     </div>
 
-        <main class="content">
-            <div class="game-zone ui-panel">
-            <h3>Gráfico de Costo</h3>
-                <div class="chart-container">
-                    <canvas id="gradientChart"></canvas>
-                    <div id="gradient-knight" class="idle"></div>
-                </div>
+    <!-- Menú principal -->
+    <div id="main-menu" class="screen">
+        <div class="menu-background">
+            <div class="menu-container">
+                <h1 class="game-title">Linear Quest</h1>
+                <nav class="main-nav">
+                    <button class="menu-btn" id="play-btn">
+                        <span class="btn-icon">🎮</span>
+                        Jugar
+                    </button>
+                    <button class="menu-btn" id="tutorial-btn">
+                        <span class="btn-icon">📚</span>
+                        Tutorial
+                    </button>
+                    <button class="menu-btn" id="progress-btn">
+                        <span class="btn-icon">📊</span>
+                        Progreso
+                    </button>
+                </nav>
             </div>
-
-            <aside class="controls-panel ui-panel">
-                <h3>Controles</h3>
-                <div class="controls-grid">
-                    <div class="control-group">
-                        <label for="learningRate">Tamaño del Paso</label>
-                        <input type="range" id="learningRate" min="0.01" max="1.0" step="0.01" value="0.1">
-                        <span id="learningRateValue">0.1</span>
-                    </div>
-                    <div class="control-group">
-                        <label for="startPoint">Punto de Inicio</label>
-                        <input type="range" id="startPoint" min="-10" max="10" step="1" value="8">
-                        <span id="startPointValue">8</span>
-                    </div>
-                </div>
-                <button id="startButton" class="btn">¡Comenzar!</button>
-                <button id="resetButton" class="btn">Reiniciar</button>
-            </aside>
-
-            <div class="stats-panel ui-panel">
-                <h3>Estadísticas</h3>
-                <p>Pasos: <span id="iterationCount">0</span></p>
-                <p>Distancia: <span id="costValue">-</span></p>
-            </div>
-
-            <div class="achievements-panel ui-panel">
-                <h3>Logros</h3>
-                <div id="achievementsList" class="achievements-list">
-                    <!-- Logros aquí -->
-                </div>
-            </div>
-        </main>
+        </div>
     </div>
 
-    <script type="module" src="/src/temas/descenso-de-gradiente/main.js"></script>
+    <!-- Selector de niveles -->
+    <div id="level-select" class="screen">
+        <div class="level-select-container">
+            <h2>Selecciona tu Aventura</h2>
+            <div class="levels-grid">
+                <div class="level-card unlocked" data-level="1">
+                    <div class="level-number">1</div>
+                    <h3>Primer Paso</h3>
+                    <p>¿Qué es un gradiente?</p>
+                    <div class="level-stars">
+                        <span class="star">☆</span>
+                        <span class="star">☆</span>
+                        <span class="star">☆</span>
+                    </div>
+                </div>
+                <div class="level-card locked" data-level="2">
+                    <div class="level-number">2</div>
+                    <h3>Dirección Correcta</h3>
+                    <p>Siguiendo la pendiente</p>
+                    <div class="level-stars">
+                        <span class="star">☆</span>
+                        <span class="star">☆</span>
+                        <span class="star">☆</span>
+                    </div>
+                </div>
+                <div class="level-card locked" data-level="3">
+                    <div class="level-number">3</div>
+                    <h3>Velocidad Óptima</h3>
+                    <p>Learning rate perfecto</p>
+                    <div class="level-stars">
+                        <span class="star">☆</span>
+                        <span class="star">☆</span>
+                        <span class="star">☆</span>
+                    </div>
+                </div>
+                <div class="level-card locked" data-level="4">
+                    <div class="level-number">4</div>
+                    <h3>Múltiples Caminos</h3>
+                    <p>Funciones complejas</p>
+                    <div class="level-stars">
+                        <span class="star">☆</span>
+                        <span class="star">☆</span>
+                        <span class="star">☆</span>
+                    </div>
+                </div>
+            </div>
+            <button class="back-btn" id="back-to-menu">← Volver al Menú</button>
+        </div>
+    </div>
+
+    <!-- Pantalla de juego -->
+    <div id="game-screen" class="screen">
+        <div class="game-container">
+            <header class="game-header">
+                <div class="level-info">
+                    <span id="current-level-name">Nivel 1: Primer Paso</span>
+                </div>
+                <div class="game-stats">
+                    <span>Pasos: <span id="step-counter">0</span></span>
+                    <span>Puntos: <span id="score-counter">0</span></span>
+                </div>
+            </header>
+
+            <main class="game-main">
+                <div class="explanation-panel">
+                    <h3 id="lesson-title">¿Qué es un gradiente?</h3>
+                    <p id="lesson-text">El gradiente nos dice en qué dirección la función crece más rápido. Para encontrar el mínimo, vamos en dirección opuesta.</p>
+                </div>
+
+                <div class="visualization-area">
+                    <canvas id="game-canvas"></canvas>
+                    <div class="character-sprite" id="player-sprite"></div>
+                </div>
+
+                <div class="controls-panel">
+                    <div class="control-group">
+                        <label for="learning-rate">Velocidad de Aprendizaje</label>
+                        <input type="range" id="learning-rate" min="0.01" max="0.5" step="0.01" value="0.1">
+                        <span id="lr-value">0.1</span>
+                    </div>
+                    <div class="control-group">
+                        <label for="start-position">Posición Inicial</label>
+                        <input type="range" id="start-position" min="-5" max="5" step="0.1" value="3">
+                        <span id="pos-value">3.0</span>
+                    </div>
+                    <div class="action-buttons">
+                        <button id="start-btn" class="action-btn primary">Comenzar</button>
+                        <button id="reset-btn" class="action-btn">Reiniciar</button>
+                        <button id="hint-btn" class="action-btn">💡 Pista</button>
+                    </div>
+                </div>
+            </main>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="level-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pantalla de victoria -->
+    <div id="victory-screen" class="screen">
+        <div class="victory-container">
+            <h2>¡Nivel Completado!</h2>
+            <div class="victory-stats">
+                <div class="stat">
+                    <span class="stat-label">Pasos</span>
+                    <span class="stat-value" id="final-steps">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Puntos</span>
+                    <span class="stat-value" id="final-score">0</span>
+                </div>
+                <div class="stars-earned" id="stars-earned">
+                    <span class="star">⭐</span>
+                    <span class="star">⭐</span>
+                    <span class="star">⭐</span>
+                </div>
+            </div>
+            <div class="victory-actions">
+                <button id="next-level-btn" class="action-btn primary">Siguiente Nivel</button>
+                <button id="retry-level-btn" class="action-btn">Reintentar</button>
+                <button id="back-to-levels-btn" class="action-btn">Seleccionar Nivel</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
 </body>
 </html>

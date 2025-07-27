@@ -90,6 +90,29 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
     margin-bottom: 3rem;
+    max-height: 400px; /* Altura máxima para activar el scroll */
+    overflow-y: auto; /* Activar scroll vertical cuando sea necesario */
+    padding-right: 1rem; /* Espacio para la barra de scroll */
+}
+
+/* Estilo de la barra de scroll */
+.level-grid::-webkit-scrollbar {
+    width: 8px;
+}
+
+.level-grid::-webkit-scrollbar-track {
+    background: var(--bg-tertiary);
+    border-radius: 4px;
+}
+
+.level-grid::-webkit-scrollbar-thumb {
+    background: var(--accent-primary);
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+.level-grid::-webkit-scrollbar-thumb:hover {
+    background: #00aacc;
 }
 
 .level-card {
@@ -102,7 +125,26 @@ body {
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    animation: fadeInCard 0.5s ease-out forwards;
+    opacity: 0;
 }
+
+@keyframes fadeInCard {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.level-card:nth-child(1) { animation-delay: 0.1s; }
+.level-card:nth-child(2) { animation-delay: 0.2s; }
+.level-card:nth-child(3) { animation-delay: 0.3s; }
+.level-card:nth-child(4) { animation-delay: 0.4s; }
+.level-card:nth-child(5) { animation-delay: 0.5s; }
 
 .level-card::before {
     content: '';
