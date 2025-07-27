@@ -11,6 +11,7 @@ const LEVELS = {
     target: 0,
     tolerance: 0.2,
     maxSteps: 15,
+    difficulty: 1,
     hints: [
       "El gradiente en x=2 es 2, así que debemos movernos hacia la izquierda",
       "Mientras más lejos del centro, mayor es el gradiente",
@@ -26,6 +27,7 @@ const LEVELS = {
     target: 1,
     tolerance: 0.15,
     maxSteps: 20,
+    difficulty: 2,
     hints: [
       "El mínimo no siempre está en x=0",
       "Observa hacia dónde apunta el gradiente y ve en dirección opuesta",
@@ -41,6 +43,7 @@ const LEVELS = {
     target: 0,
     tolerance: 0.1,
     maxSteps: 25,
+    difficulty: 3,
     hints: [
       "Esta función es más compleja, necesitas ajustar el learning rate",
       "Si oscila mucho, reduce el learning rate",
@@ -56,6 +59,7 @@ const LEVELS = {
     target: -1.42755,
     tolerance: 0.2,
     maxSteps: 40,
+    difficulty: 4,
     hints: [
       "Hay múltiples valles en esta función",
       "El punto de inicio importa mucho",
@@ -479,13 +483,21 @@ function updateLevelSelect() {
   document.querySelectorAll('.level-card').forEach(card => {
     const level = parseInt(card.dataset.level);
     const isUnlocked = gameState.unlockedLevels.has(level);
-    
+    card.querySelector('.diff-value').textContent = LEVELS[level].difficulty;
+    const bestScoreEl = card.querySelector('.score-value');
+    const progress = gameState.levelProgress[level];
+
+    if (progress) {
+      bestScoreEl.textContent = progress.score;
+    } else {
+      bestScoreEl.textContent = '--';
+    }
+
     if (isUnlocked) {
       card.classList.remove('locked');
       card.classList.add('unlocked');
-      
+
       // Mostrar estrellas si completado
-      const progress = gameState.levelProgress[level];
       if (progress) {
         const stars = card.querySelectorAll('.star');
         stars.forEach((star, index) => {
