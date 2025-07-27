@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 /* === VARIABLES GLOBALES === */
 :root {
   --primary-color: #6366f1;
@@ -15,6 +17,12 @@
   --gradient-secondary: linear-gradient(135deg, var(--secondary-color), #f97316);
   --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.3);
   --shadow-strong: 0 8px 32px rgba(0, 0, 0, 0.5);
+  /* Estilo Pixel Art */
+  --pixel-font: 'Press Start 2P', cursive;
+  --pixel-bg: #0d0c1d;
+  --pixel-border: #3f3f3f;
+  --pixel-text: #f5f5f5;
+  --pixel-accent: #fbbf24;
 }
 
 /* === RESET Y BASE === */
@@ -227,16 +235,19 @@ body {
   max-width: 1200px;
   padding: 2rem;
   text-align: center;
+  font-family: var(--pixel-font);
+}
+
+.pixel-mode {
+  background: var(--pixel-bg);
+  color: var(--pixel-text);
 }
 
 .level-select-container h2 {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 3rem;
-  background: var(--gradient-secondary);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--pixel-accent);
 }
 
 .levels-grid {
@@ -247,21 +258,26 @@ body {
 }
 
 .level-card {
-  background: var(--dark-surface);
-  border: 2px solid var(--border-color);
-  border-radius: 20px;
-  padding: 2rem;
+  background: var(--pixel-bg);
+  border: 4px solid var(--pixel-border);
+  border-radius: 8px;
+  padding: 1.5rem;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  font-family: var(--pixel-font);
+  color: var(--pixel-text);
+  text-shadow: 0 0 4px #000;
 }
 
 .level-card.unlocked:hover {
-  transform: translateY(-8px);
-  border-color: var(--primary-color);
-  box-shadow: var(--shadow-strong);
+  transform: translateY(-4px);
+  border-color: var(--pixel-accent);
+  box-shadow: 0 0 10px var(--pixel-accent);
+  background: var(--pixel-accent);
+  color: var(--pixel-bg);
 }
 
 .level-card.locked {
@@ -270,39 +286,51 @@ body {
 }
 
 .level-number {
-  width: 60px;
-  height: 60px;
-  background: var(--gradient-primary);
-  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  background: var(--pixel-accent);
+  border: 4px solid var(--pixel-border);
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: 800;
-  color: white;
+  color: var(--pixel-bg);
   margin: 0 auto 1rem;
 }
 
 .level-card h3 {
-  font-size: 1.5rem;
+  font-size: 1rem;
   margin-bottom: 0.5rem;
-  color: var(--text-primary);
+  color: var(--pixel-text);
 }
 
 .level-card p {
-  color: var(--text-secondary);
-  margin-bottom: 1.5rem;
+  color: var(--pixel-text);
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
 }
 
 .level-stars {
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.25rem;
+  font-size: 1rem;
 }
 
 .star {
-  font-size: 1.5rem;
-  color: var(--secondary-color);
+  font-size: 1rem;
+  color: var(--pixel-accent);
+}
+
+.level-extra {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.6rem;
+  color: var(--pixel-text);
 }
 
 .back-btn {
