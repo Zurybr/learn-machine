@@ -428,6 +428,10 @@ function initializeEvents() {
     gameState.currentLevel = 1;
     startGame();
   });
+
+  document.getElementById('topics-btn').addEventListener('click', () => {
+    window.location.href = '/src/temas/index.html';
+  });
   
   // Selector de niveles
   document.getElementById('back-to-menu').addEventListener('click', () => {
