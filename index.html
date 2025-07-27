@@ -1,12 +1,83 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
-  </head>
-  <body>
-    <meta http-equiv="refresh" content="0;url=/src/temas/descenso-de-gradiente/index.html" />
-  </body>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="/vite.svg">
+    <title>Gradient Knight</title>
+    <link rel="stylesheet" href="/src/temas/descenso-de-gradiente/style.css">
+</head>
+<body>
+    <div class="container">
+    <header class="ui-panel">
+        <h1>Descenso de Gradiente</h1>
+    </header>
+
+    <section class="ui-panel instructions">
+        <h3>Instrucciones</h3>
+        <ul>
+            <li>Ajusta el tamaño del paso (learning rate).</li>
+            <li>Define el punto de inicio.</li>
+            <li>Pulsa <strong>Comenzar</strong> para ver el descenso.</li>
+            <li>Observa cómo el punto se mueve hacia el mínimo.</li>
+        </ul>
+    </section>
+
+    <section class="ui-panel level-selector">
+        <h3>Seleccionar Nivel</h3>
+        <select id="levelSelector">
+            <option value="1">Nivel 1: Valle Sereno</option>
+            <option value="2">Nivel 2: Colinas Engañosas</option>
+        </select>
+    </section>
+
+    <div class="game-hud ui-panel">
+        <div>Puntaje: <span id="totalScore" class="score-value">0</span></div>
+        <div>Nivel: <span id="currentLevel" class="score-value">1</span></div>
+    </div>
+
+        <main class="content">
+            <div class="game-zone ui-panel">
+            <h3>Gráfico de Costo</h3>
+                <div class="chart-container">
+                    <canvas id="gradientChart"></canvas>
+                    <div id="gradient-knight" class="idle"></div>
+                </div>
+            </div>
+
+            <aside class="controls-panel ui-panel">
+                <h3>Controles</h3>
+                <div class="controls-grid">
+                    <div class="control-group">
+                        <label for="learningRate">Tamaño del Paso</label>
+                        <input type="range" id="learningRate" min="0.01" max="1.0" step="0.01" value="0.1">
+                        <span id="learningRateValue">0.1</span>
+                    </div>
+                    <div class="control-group">
+                        <label for="startPoint">Punto de Inicio</label>
+                        <input type="range" id="startPoint" min="-10" max="10" step="1" value="8">
+                        <span id="startPointValue">8</span>
+                    </div>
+                </div>
+                <button id="startButton" class="btn">¡Comenzar!</button>
+                <button id="resetButton" class="btn">Reiniciar</button>
+            </aside>
+
+            <div class="stats-panel ui-panel">
+                <h3>Estadísticas</h3>
+                <p>Pasos: <span id="iterationCount">0</span></p>
+                <p>Distancia: <span id="costValue">-</span></p>
+            </div>
+
+            <div class="achievements-panel ui-panel">
+                <h3>Logros</h3>
+                <div id="achievementsList" class="achievements-list">
+                    <!-- Logros aquí -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="/src/temas/descenso-de-gradiente/main.js"></script>
+</body>
 </html>
