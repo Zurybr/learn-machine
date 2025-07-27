@@ -3,61 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gradient Knight</title>
+    <link rel="icon" type="image/svg+xml" href="/vite.svg">
+    <title>Gradient Quest - Aventura Matemática</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header class="ui-panel">
-            <h1>Gradient Knight</h1>
-            <p>¡Encuentra el tesoro en el valle del costo!</p>
-        </header>
-
-        <div class="game-hud ui-panel">
-            <div>Score: <span id="totalScore" class="score-value">0</span></div>
-            <div>Level: <span id="currentLevel" class="score-value">1</span></div>
+    <!-- Pantalla de Menú Principal -->
+    <div id="mainMenu" class="screen active">
+        <div class="menu-container">
+            <header class="title-section">
+                <h1 class="game-title">🏔️ Gradient Quest</h1>
+                <p class="subtitle">Domina el descenso de gradiente en una aventura épica</p>
+            </header>
+            
+            <div class="menu-content">
+                <div class="level-grid">
+                    <div class="level-card tutorial" data-level="tutorial">
+                        <div class="level-icon">🎓</div>
+                        <h3>Tutorial</h3>
+                        <p>Aprende los fundamentos</p>
+                        <div class="level-status unlocked">Disponible</div>
+                    </div>
+                    
+                    <div class="level-card" data-level="1">
+                        <div class="level-icon">🌄</div>
+                        <h3>Valle Simple</h3>
+                        <p>Función cuadrática básica</p>
+                        <div class="level-status locked" id="level1Status">Bloqueado</div>
+                    </div>
+                    
+                    <div class="level-card" data-level="2">
+                        <div class="level-icon">🏔️</div>
+                        <h3>Colinas Onduladas</h3>
+                        <p>Función con múltiples mínimos</p>
+                        <div class="level-status locked" id="level2Status">Bloqueado</div>
+                    </div>
+                    
+                    <div class="level-card" data-level="3">
+                        <div class="level-icon">🌋</div>
+                        <h3>Volcán Traicionero</h3>
+                        <p>Función con ruido y obstáculos</p>
+                        <div class="level-status locked" id="level3Status">Bloqueado</div>
+                    </div>
+                </div>
+                
+                <div class="progress-section">
+                    <h3>Tu Progreso</h3>
+                    <div class="progress-stats">
+                        <div class="stat">
+                            <span class="stat-value" id="totalStars">0</span>
+                            <span class="stat-label">⭐ Estrellas</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value" id="totalScore">0</span>
+                            <span class="stat-label">🏆 Puntos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
 
-        <main class="content">
-            <div class="game-zone ui-panel">
-                <h3>Mapa del Valle</h3>
-                <div class="chart-container">
-                    <canvas id="gradientChart"></canvas>
-                    <div id="gradient-knight" class="idle"></div>
-                </div>
-            </div>
-
-            <aside class="controls-panel ui-panel">
-                <h3>Controles</h3>
-                <div class="controls-grid">
-                    <div class="control-group">
-                        <label for="learningRate">Tamaño del Paso</label>
-                        <input type="range" id="learningRate" min="0.01" max="1.0" step="0.01" value="0.1">
-                        <span id="learningRateValue">0.1</span>
-                    </div>
-                    <div class="control-group">
-                        <label for="startPoint">Punto de Inicio</label>
-                        <input type="range" id="startPoint" min="-10" max="10" step="1" value="8">
-                        <span id="startPointValue">8</span>
+    <!-- Pantalla de Juego -->
+    <div id="gameScreen" class="screen">
+        <div class="game-container">
+            <!-- HUD Superior -->
+            <div class="game-hud">
+                <button id="backToMenu" class="btn-small">← Menú</button>
+                <div class="level-info">
+                    <h2 id="currentLevelName">Valle Simple</h2>
+                    <div class="stars" id="levelStars">
+                        <span class="star">☆</span>
+                        <span class="star">☆</span>
+                        <span class="star">☆</span>
                     </div>
                 </div>
-                <button id="startButton" class="btn">¡Comenzar!</button>
-                <button id="resetButton" class="btn">Reiniciar</button>
-            </aside>
-
-            <div class="stats-panel ui-panel">
-                <h3>Estadísticas</h3>
-                <p>Pasos: <span id="iterationCount">0</span></p>
-                <p>Distancia: <span id="costValue">-</span></p>
-            </div>
-
-            <div class="achievements-panel ui-panel">
-                <h3>Logros</h3>
-                <div id="achievementsList" class="achievements-list">
-                    <!-- Logros aquí -->
+                <div class="score-display">
+                    <span id="gameScore">0</span> pts
                 </div>
             </div>
-        </main>
+
+            <!-- Área Principal del Juego -->
+            <div class="game-main">
+                <div class="visualization-panel">
+                    <div class="chart-container">
+                        <canvas id="gradientChart"></canvas>
+                        <div id="gradient-knight" class="knight idle"></div>
+                        <div id="target-indicator" class="target-indicator"></div>
+                        <div id="path-trail" class="path-trail"></div>
+                    </div>
+                    
+                    <div class="chart-info">
+                        <div class="info-item">
+                            <span class="label">Posición:</span>
+                            <span id="currentPosition">0.00</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Costo:</span>
+                            <span id="currentCost">0.00</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Gradiente:</span>
+                            <span id="currentGradient">0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="controls-panel">
+                    <div class="tutorial-text" id="tutorialText">
+                        ¡Bienvenido! Ajusta los controles y presiona Iniciar para comenzar tu aventura.
+                    </div>
+                    
+                    <div class="controls-grid">
+                        <div class="control-group">
+                            <label for="learningRate">
+                                🚀 Velocidad de Aprendizaje
+                                <span class="tooltip">¿Qué tan grandes son tus pasos?</span>
+                            </label>
+                            <input type="range" id="learningRate" min="0.01" max="0.5" step="0.01" value="0.1">
+                            <span id="learningRateValue" class="value-display">0.10</span>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="startPoint">
+                                📍 Punto de Inicio
+                                <span class="tooltip">¿Desde dónde empiezas tu búsqueda?</span>
+                            </label>
+                            <input type="range" id="startPoint" min="-10" max="10" step="0.5" value="8">
+                            <span id="startPointValue" class="value-display">8.0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button id="startButton" class="btn-primary">🚀 Iniciar Búsqueda</button>
+                        <button id="pauseButton" class="btn-secondary" disabled>⏸️ Pausar</button>
+                        <button id="resetButton" class="btn-secondary">🔄 Reiniciar</button>
+                    </div>
+                    
+                    <div class="stats-display">
+                        <div class="stat-item">
+                            <span class="stat-label">Pasos:</span>
+                            <span id="stepCount">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Tiempo:</span>
+                            <span id="timeElapsed">0s</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Mejor:</span>
+                            <span id="bestScore">---</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pantalla de Victoria -->
+    <div id="victoryScreen" class="screen">
+        <div class="victory-container">
+            <div class="victory-content">
+                <h1 class="victory-title">🎉 ¡Nivel Completado!</h1>
+                <div class="victory-stats">
+                    <div class="final-score">
+                        <span id="finalScore">0</span> puntos
+                    </div>
+                    <div class="stars-earned" id="starsEarned">
+                        <span class="star earned">⭐</span>
+                        <span class="star earned">⭐</span>
+                        <span class="star">☆</span>
+                    </div>
+                    <div class="performance-details">
+                        <p>Pasos utilizados: <span id="finalSteps">0</span></p>
+                        <p>Tiempo: <span id="finalTime">0s</span></p>
+                        <p>Eficiencia: <span id="efficiency">0%</span></p>
+                    </div>
+                </div>
+                <div class="victory-actions">
+                    <button id="nextLevelButton" class="btn-primary">Siguiente Nivel →</button>
+                    <button id="retryButton" class="btn-secondary">🔄 Intentar de Nuevo</button>
+                    <button id="backToMenuFromVictory" class="btn-secondary">← Menú Principal</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script type="module" src="main.js"></script>
